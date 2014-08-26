@@ -19,6 +19,8 @@
 		B37CF47819AC97F4004261EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B37CF46019AC97F4004261EA /* UIKit.framework */; };
 		B37CF48019AC97F4004261EA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B37CF47E19AC97F4004261EA /* InfoPlist.strings */; };
 		B37CF48219AC97F4004261EA /* Down2048Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B37CF48119AC97F4004261EA /* Down2048Tests.m */; };
+		B37CF48F19AC9833004261EA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B37CF48D19AC9833004261EA /* MainViewController.m */; };
+		B37CF49019AC9833004261EA /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B37CF48E19AC9833004261EA /* MainViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,9 @@
 		B37CF47D19AC97F4004261EA /* Down2048Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Down2048Tests-Info.plist"; sourceTree = "<group>"; };
 		B37CF47F19AC97F4004261EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B37CF48119AC97F4004261EA /* Down2048Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Down2048Tests.m; sourceTree = "<group>"; };
+		B37CF48C19AC9833004261EA /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Main/MainViewController.h; sourceTree = "<group>"; };
+		B37CF48D19AC9833004261EA /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Main/MainViewController.m; sourceTree = "<group>"; };
+		B37CF48E19AC9833004261EA /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainViewController.xib; path = Main/MainViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +114,7 @@
 			children = (
 				B37CF46B19AC97F4004261EA /* AppDelegate.h */,
 				B37CF46C19AC97F4004261EA /* AppDelegate.m */,
+				B37CF48B19AC9807004261EA /* Main */,
 				B37CF46E19AC97F4004261EA /* Images.xcassets */,
 				B37CF46319AC97F4004261EA /* Supporting Files */,
 			);
@@ -142,6 +148,16 @@
 				B37CF47E19AC97F4004261EA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B37CF48B19AC9807004261EA /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				B37CF48C19AC9833004261EA /* MainViewController.h */,
+				B37CF48D19AC9833004261EA /* MainViewController.m */,
+				B37CF48E19AC9833004261EA /* MainViewController.xib */,
+			);
+			name = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B37CF46719AC97F4004261EA /* InfoPlist.strings in Resources */,
+				B37CF49019AC9833004261EA /* MainViewController.xib in Resources */,
 				B37CF46F19AC97F4004261EA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B37CF46D19AC97F4004261EA /* AppDelegate.m in Sources */,
+				B37CF48F19AC9833004261EA /* MainViewController.m in Sources */,
 				B37CF46919AC97F4004261EA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
