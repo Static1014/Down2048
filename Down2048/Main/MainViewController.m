@@ -215,6 +215,7 @@
 - (void)initBtnView {
 //    [self.labelView setFrame:CGRectMake(0, 20, 320, iPhone5?60:50)];
 //    [self.btnView setFrame:CGRectMake(0, iPhone5?448:320, 320, 70)];
+    
 }
 
 - (IBAction)clickVoice:(id)sender {
