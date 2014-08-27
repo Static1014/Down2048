@@ -14,7 +14,7 @@
 
 @interface MainViewController : UIViewController
 
-@property (strong, nonatomic) NSMutableArray *locationArray;
+@property (strong, nonatomic) NSMutableArray *labelArray;
 
 @property (strong, nonatomic) MyLabel *standbyLable;
 @property (strong, nonatomic) MyLabel *downLable;

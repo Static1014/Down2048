@@ -42,50 +42,7 @@
 
 #pragma mark - initData
 - (void)initData {
-    self.locationArray = [NSMutableArray arrayWithObjects:
-                          [NSNumber numberWithInt:11],
-                          [NSNumber numberWithInt:12],
-                          [NSNumber numberWithInt:13],
-                          [NSNumber numberWithInt:14],
-                          [NSNumber numberWithInt:15],
-                          [NSNumber numberWithInt:16],
-
-                          [NSNumber numberWithInt:21],
-                          [NSNumber numberWithInt:22],
-                          [NSNumber numberWithInt:23],
-                          [NSNumber numberWithInt:24],
-                          [NSNumber numberWithInt:25],
-                          [NSNumber numberWithInt:26],
-
-                          [NSNumber numberWithInt:31],
-                          [NSNumber numberWithInt:32],
-                          [NSNumber numberWithInt:33],
-                          [NSNumber numberWithInt:34],
-                          [NSNumber numberWithInt:35],
-                          [NSNumber numberWithInt:36],
-
-                          [NSNumber numberWithInt:41],
-                          [NSNumber numberWithInt:42],
-                          [NSNumber numberWithInt:43],
-                          [NSNumber numberWithInt:44],
-                          [NSNumber numberWithInt:45],
-                          [NSNumber numberWithInt:46],
-
-                          [NSNumber numberWithInt:51],
-                          [NSNumber numberWithInt:52],
-                          [NSNumber numberWithInt:53],
-                          [NSNumber numberWithInt:54],
-                          [NSNumber numberWithInt:55],
-                          [NSNumber numberWithInt:56],
-
-                          [NSNumber numberWithInt:61],
-                          [NSNumber numberWithInt:62],
-                          [NSNumber numberWithInt:63],
-                          [NSNumber numberWithInt:64],
-                          [NSNumber numberWithInt:65],
-                          [NSNumber numberWithInt:66],
-
-                          nil];
+    self.labelArray = [NSMutableArray arrayWithCapacity:36];
 
     [self bornStandbyLabelAndDownLabel];
 }
@@ -93,7 +50,7 @@
 #pragma mark - action
 - (void)bornStandbyLabelAndDownLabel {
     self.standbyLable = [[MyLabel alloc]init];
-    self.standbyLable.number = arc4random()%100 + 1;
+    self.standbyLable.number = arc4random()%10 + 1;
     [self.standbyLable setText:[NSString stringWithFormat:@"%d",self.standbyLable.number]];
 
     self.standbyLable.location = arc4random()%COLUMN_NUM + 1;
@@ -101,7 +58,7 @@
     [self.gameView addSubview:self.standbyLable];
 
     self.downLable = [[MyLabel alloc]init];
-    self.downLable.number = arc4random()%100 + 1;
+    self.downLable.number = arc4random()%10 + 1;
     [self.downLable setText:[NSString stringWithFormat:@"%d",self.downLable.number]];
 
     self.downLable.location = 10 + arc4random()%COLUMN_NUM + 1;
@@ -122,7 +79,7 @@
     self.downLable.location = 10 + self.standbyLable.location;
     self.downLable.frame = CGRectMake(48*(self.standbyLable.location-1)+self.standbyLable.location*4, 4 + 52, 48, 48);
 
-    self.standbyLable.number = arc4random()%100 + 1;
+    self.standbyLable.number = arc4random()%10 + 1;
     [self.standbyLable setText:[NSString stringWithFormat:@"%d",self.standbyLable.number]];
 
     self.standbyLable.location = arc4random()%COLUMN_NUM + 1;
@@ -136,26 +93,58 @@
     int indexRow = self.downLable.location/10;
 
     if (indexRow == ROW_NUM) {
-        // Have been the bottom of the GameView
+        //  Have been the bottom of the GameView.
         [downTimer invalidate];
+        [self createNewLabel];
 
         [self changeStandbyLabel];
-    } else if (1 == 2) {
-
     } else {
-        // Move one step down.
-        int x = 48*(indexColumn-1) + indexColumn*4;
-        int y = 4 + 52*(indexRow+1);
-        self.downLable.frame = CGRectMake(x, y, 48, 48);
+        if ([self checkExistLabel] != nil) {
+            //  There is a Label below DownLable.
+            [downTimer invalidate];
 
-        self.downLable.location = (indexRow+1)*10 +indexColumn;
+//            MyLabel *existLabel = (MyLabel*)([self.gameView viewWithTag:self.downLable.location]);
+            MyLabel *existLabel = [self checkExistLabel];
+            existLabel.number += self.downLable.number;
+            [existLabel setText:[NSString stringWithFormat:@"%d",existLabel.number]];
+
+            [self changeStandbyLabel];
+        } else {
+            //  Move one step down.
+            int x = 48*(indexColumn-1) + indexColumn*4;
+            int y = 4 + 52*(indexRow+1);
+            self.downLable.frame = CGRectMake(x, y, 48, 48);
+
+            self.downLable.location = (indexRow+1)*10 +indexColumn;
+        }
     }
 }
 
-- (CGRect)caculateDownLabelLocation:(int)location {
+- (MyLabel*)checkExistLabel {
+//    NSLog(@"-----%d",self.downLable.location);
+    for (MyLabel *temp in self.labelArray) {
+//        NSLog(@"--%d",temp.location);
+        if (self.downLable.location + 10 == temp.location) {
+            return temp;
+        }
+    }
+    return nil;
+}
 
+- (void)createNewLabel {
+    int indexColumn = self.downLable.location%10;
+    int indexRow = self.downLable.location/10;
+    MyLabel *newLabel = [[MyLabel alloc]init];
 
-    return CGRectMake(0, 0, 0, 0);
+    newLabel.location = 10*indexRow + indexColumn;
+    [newLabel setFrame:CGRectMake(48*(indexColumn-1) + indexColumn*4, 4 + 52*indexRow, 48, 48)];
+
+    newLabel.number = self.downLable.number;
+    newLabel.tag = self.downLable.number;
+    [newLabel setText:[NSString stringWithFormat:@"%d",self.downLable.number]];
+
+    [self.gameView addSubview:newLabel];
+    [self.labelArray addObject:newLabel];
 }
 
 
