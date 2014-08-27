@@ -7,7 +7,23 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyLabel.h"
+
+#define COLUMN_NUM 6
+#define ROW_NUM 6
 
 @interface MainViewController : UIViewController
 
+@property (strong, nonatomic) NSMutableArray *locationArray;
+
+@property (strong, nonatomic) MyLabel *standbyLable;
+@property (strong, nonatomic) MyLabel *downLable;
+@property (strong, nonatomic) UIImageView *gameView;
+
+@property (strong, nonatomic) IBOutlet UIButton *voiceBtn;
+@property (strong, nonatomic) IBOutlet UIButton *startBtn;
+@property (strong, nonatomic) IBOutlet UIButton *restartBtn;
+@property (strong, nonatomic) IBOutlet UIButton *shareBtn;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLable;
+@property (strong, nonatomic) IBOutlet UILabel *bestLable;
 @end

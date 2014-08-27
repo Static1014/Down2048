@@ -21,6 +21,7 @@
 		B37CF48219AC97F4004261EA /* Down2048Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B37CF48119AC97F4004261EA /* Down2048Tests.m */; };
 		B37CF48F19AC9833004261EA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B37CF48D19AC9833004261EA /* MainViewController.m */; };
 		B37CF49019AC9833004261EA /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B37CF48E19AC9833004261EA /* MainViewController.xib */; };
+		B37CF49319ADAF04004261EA /* MyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B37CF49219ADAF04004261EA /* MyLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,8 @@
 		B37CF48C19AC9833004261EA /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Main/MainViewController.h; sourceTree = "<group>"; };
 		B37CF48D19AC9833004261EA /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Main/MainViewController.m; sourceTree = "<group>"; };
 		B37CF48E19AC9833004261EA /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainViewController.xib; path = Main/MainViewController.xib; sourceTree = "<group>"; };
+		B37CF49119ADAF04004261EA /* MyLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyLabel.h; path = MyLable/MyLabel.h; sourceTree = "<group>"; };
+		B37CF49219ADAF04004261EA /* MyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyLabel.m; path = MyLable/MyLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,8 @@
 				B37CF48C19AC9833004261EA /* MainViewController.h */,
 				B37CF48D19AC9833004261EA /* MainViewController.m */,
 				B37CF48E19AC9833004261EA /* MainViewController.xib */,
+				B37CF49119ADAF04004261EA /* MyLabel.h */,
+				B37CF49219ADAF04004261EA /* MyLabel.m */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 			files = (
 				B37CF46D19AC97F4004261EA /* AppDelegate.m in Sources */,
 				B37CF48F19AC9833004261EA /* MainViewController.m in Sources */,
+				B37CF49319ADAF04004261EA /* MyLabel.m in Sources */,
 				B37CF46919AC97F4004261EA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -455,6 +461,7 @@
 				B37CF48719AC97F4004261EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B37CF48819AC97F4004261EA /* Build configuration list for PBXNativeTarget "Down2048Tests" */ = {
 			isa = XCConfigurationList;
@@ -463,6 +470,7 @@
 				B37CF48A19AC97F4004261EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
