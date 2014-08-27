@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 
 @interface MainViewController () {
-    NSTimer *StandbyTimer, *downTimer;
+    NSTimer *downTimer;
 }
 
 @end
@@ -21,6 +21,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.view.backgroundColor = [UIColor lightGrayColor];
     }
     return self;
 }
@@ -30,7 +31,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    [self addBackGround];
+    [self initBtnView];
+    
+    [self initGameView];
+    
     [self initData];
 }
 
@@ -54,7 +58,7 @@
     [self.standbyLable setText:[NSString stringWithFormat:@"%d",self.standbyLable.number]];
 
     self.standbyLable.location = arc4random()%COLUMN_NUM + 1;
-    self.standbyLable.frame = CGRectMake(48*(self.standbyLable.location-1)+self.standbyLable.location*4, 4, 48, 48);
+    self.standbyLable.frame = CGRectMake(LABEL_WIDTH*(self.standbyLable.location-1)+self.standbyLable.location*SPACE_WIDTH, SPACE_WIDTH, LABEL_WIDTH, LABEL_HEIGHT);
     [self.gameView addSubview:self.standbyLable];
 
     self.downLable = [[MyLabel alloc]init];
@@ -62,7 +66,7 @@
     [self.downLable setText:[NSString stringWithFormat:@"%d",self.downLable.number]];
 
     self.downLable.location = 10 + arc4random()%COLUMN_NUM + 1;
-    self.downLable.frame = CGRectMake(48*(self.downLable.location%10-1)+self.downLable.location%10*4, 4 + 52, 48, 48);
+    self.downLable.frame = CGRectMake(LABEL_WIDTH*(self.downLable.location%10-1)+self.downLable.location%10*SPACE_WIDTH, SPACE_WIDTH*2 + LABEL_WIDTH, LABEL_WIDTH, LABEL_HEIGHT);
     [self.gameView addSubview:self.downLable];
 
     [self changeStandbyLabel];
@@ -77,13 +81,14 @@
     self.downLable.number = self.standbyLable.number;
     [self.downLable setText:[NSString stringWithFormat:@"%d",self.standbyLable.number]];
     self.downLable.location = 10 + self.standbyLable.location;
-    self.downLable.frame = CGRectMake(48*(self.standbyLable.location-1)+self.standbyLable.location*4, 4 + 52, 48, 48);
+    self.downLable.frame = CGRectMake(LABEL_WIDTH*(self.standbyLable.location-1)+self.standbyLable.location*SPACE_WIDTH, SPACE_WIDTH*2 + (LABEL_HEIGHT), LABEL_WIDTH, LABEL_HEIGHT);
 
     self.standbyLable.number = arc4random()%10 + 1;
     [self.standbyLable setText:[NSString stringWithFormat:@"%d",self.standbyLable.number]];
+    self.standbyLable.backgroundColor = [UIColor colorWithRed:106/255.0 green:214/255.0 blue:125/255.0 alpha:0.7];
 
     self.standbyLable.location = arc4random()%COLUMN_NUM + 1;
-    self.standbyLable.frame = CGRectMake(48*(self.standbyLable.location-1)+self.standbyLable.location*4, 4, 48, 48);
+    self.standbyLable.frame = CGRectMake(LABEL_WIDTH*(self.standbyLable.location-1)+self.standbyLable.location*SPACE_WIDTH, SPACE_WIDTH, LABEL_WIDTH, LABEL_HEIGHT);
 
     downTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(moveDownLabel) userInfo:nil repeats:YES];
 }
@@ -96,14 +101,13 @@
         //  Have been the bottom of the GameView.
         [downTimer invalidate];
         [self createNewLabel];
-
+        
         [self changeStandbyLabel];
     } else {
         if ([self checkExistLabel] != nil) {
             //  There is a Label below DownLable.
             [downTimer invalidate];
 
-//            MyLabel *existLabel = (MyLabel*)([self.gameView viewWithTag:self.downLable.location]);
             MyLabel *existLabel = [self checkExistLabel];
             existLabel.number += self.downLable.number;
             [existLabel setText:[NSString stringWithFormat:@"%d",existLabel.number]];
@@ -111,9 +115,9 @@
             [self changeStandbyLabel];
         } else {
             //  Move one step down.
-            int x = 48*(indexColumn-1) + indexColumn*4;
-            int y = 4 + 52*(indexRow+1);
-            self.downLable.frame = CGRectMake(x, y, 48, 48);
+            int x = LABEL_WIDTH*(indexColumn-1) + indexColumn*SPACE_WIDTH;
+            int y = SPACE_WIDTH + ((LABEL_HEIGHT)+SPACE_WIDTH)*(indexRow+1);
+            self.downLable.frame = CGRectMake(x, y, LABEL_WIDTH, LABEL_HEIGHT);
 
             self.downLable.location = (indexRow+1)*10 +indexColumn;
         }
@@ -121,9 +125,7 @@
 }
 
 - (MyLabel*)checkExistLabel {
-//    NSLog(@"-----%d",self.downLable.location);
     for (MyLabel *temp in self.labelArray) {
-//        NSLog(@"--%d",temp.location);
         if (self.downLable.location + 10 == temp.location) {
             return temp;
         }
@@ -137,7 +139,7 @@
     MyLabel *newLabel = [[MyLabel alloc]init];
 
     newLabel.location = 10*indexRow + indexColumn;
-    [newLabel setFrame:CGRectMake(48*(indexColumn-1) + indexColumn*4, 4 + 52*indexRow, 48, 48)];
+    [newLabel setFrame:CGRectMake(LABEL_WIDTH*(indexColumn-1) + indexColumn*SPACE_WIDTH, SPACE_WIDTH + (SPACE_WIDTH+(LABEL_HEIGHT))*indexRow, LABEL_WIDTH, LABEL_HEIGHT)];
 
     newLabel.number = self.downLable.number;
     newLabel.tag = self.downLable.number;
@@ -149,91 +151,81 @@
 
 
 #pragma mark - initLayout
--(void)addBackGround
+-(void)initGameView
 {
-    self.gameView=[[UIImageView alloc] initWithFrame:CGRectMake(2, 80, 316, 368)];
+    self.gameView=[[UIImageView alloc] initWithFrame:CGRectMake(2, iPhone5?80:70, 316, SPACE_WIDTH*8+(LABEL_HEIGHT)*7 + 50)];
     self.gameView.userInteractionEnabled=YES;
     [self.view addSubview:self.gameView];
 
     UIGraphicsBeginImageContext(self.gameView.frame.size);
     [self.gameView.image drawInRect:self.gameView.frame];
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapButt);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), 4.0);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), SPACE_WIDTH);
     CGContextSetAllowsAntialiasing(UIGraphicsGetCurrentContext(), YES);
     CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), 238/255.0, 228/255.0, 218/255.0, 1.0);
     CGContextBeginPath(UIGraphicsGetCurrentContext());
 
     // 边框
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 0, 2);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 314, 2);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 314, 366);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 2, 366);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 2, 2);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 0, SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 314, SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 314, (SPACE_WIDTH*8+(LABEL_HEIGHT)*7)-2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH/2, (SPACE_WIDTH*8+(LABEL_HEIGHT)*7)-2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH/2, SPACE_WIDTH/2);
 
     // 竖线
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 54, 52);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 54, 364);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 54, SPACE_WIDTH+(LABEL_HEIGHT)+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 54, SPACE_WIDTH*7+(LABEL_HEIGHT)*7);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 106, 52);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 106, 364);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 106, SPACE_WIDTH+(LABEL_HEIGHT)+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 106, SPACE_WIDTH*7+(LABEL_HEIGHT)*7);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 158, 52);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 158, 364);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 158, SPACE_WIDTH+(LABEL_HEIGHT)+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 158, SPACE_WIDTH*7+(LABEL_HEIGHT)*7);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 210, 52);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 210, 364);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 210, SPACE_WIDTH+(LABEL_HEIGHT)+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 210, SPACE_WIDTH*7+(LABEL_HEIGHT)*7);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 262, 52);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 262, 364);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 262, SPACE_WIDTH+(LABEL_HEIGHT)+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 262, SPACE_WIDTH*7+(LABEL_HEIGHT)*7);
 
     // 横线
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 4, 54);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, 54);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH, (SPACE_WIDTH+(LABEL_HEIGHT))*1+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, (SPACE_WIDTH+(LABEL_HEIGHT))*1+SPACE_WIDTH/2);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 4, 106);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, 106);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH, (SPACE_WIDTH+(LABEL_HEIGHT))*2+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, (SPACE_WIDTH+(LABEL_HEIGHT))*2+SPACE_WIDTH/2);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 4, 158);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, 158);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH, (SPACE_WIDTH+(LABEL_HEIGHT))*3+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, (SPACE_WIDTH+(LABEL_HEIGHT))*3+SPACE_WIDTH/2);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 4, 210);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, 210);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH, (SPACE_WIDTH+(LABEL_HEIGHT))*4+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, (SPACE_WIDTH+(LABEL_HEIGHT))*4+SPACE_WIDTH/2);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 4, 262);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, 262);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH, (SPACE_WIDTH+(LABEL_HEIGHT))*5+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, (SPACE_WIDTH+(LABEL_HEIGHT))*5+SPACE_WIDTH/2);
 
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), 4, 314);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, 314);
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), SPACE_WIDTH, (SPACE_WIDTH+(LABEL_HEIGHT))*6+SPACE_WIDTH/2);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), 312, (SPACE_WIDTH+(LABEL_HEIGHT))*6+SPACE_WIDTH/2);
 
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     self.gameView.image=UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
-//    [self testLable:14];
 }
 
-- (void)testLable:(int)y {
-    UIImageView *test0 = [[UIImageView alloc]initWithFrame:CGRectMake(4+2, 68+2+y, 48, 48)];
-    [self.view addSubview:test0];
-    test0.backgroundColor = [UIColor greenColor];
-    UIImageView *test1 = [[UIImageView alloc]initWithFrame:CGRectMake(56+2, 120+2+y, 48, 48)];
-    [self.view addSubview:test1];
-    test1.backgroundColor = [UIColor greenColor];
-    UIImageView *test2 = [[UIImageView alloc]initWithFrame:CGRectMake(108+2, 172+2+y, 48, 48)];
-    [self.view addSubview:test2];
-    test2.backgroundColor = [UIColor greenColor];
-    UIImageView *test3 = [[UIImageView alloc]initWithFrame:CGRectMake(160+2, 224+2+y, 48, 48)];
-    [self.view addSubview:test3];
-    test3.backgroundColor = [UIColor greenColor];
-    UIImageView *test4 = [[UIImageView alloc]initWithFrame:CGRectMake(212+2, 276+2+y, 48, 48)];
-    [self.view addSubview:test4];
-    test4.backgroundColor = [UIColor greenColor];
-    UIImageView *test5 = [[UIImageView alloc]initWithFrame:CGRectMake(264+2, 328+2+y, 48, 48)];
-    [self.view addSubview:test5];
-    test5.backgroundColor = [UIColor greenColor];
-    UIImageView *test6 = [[UIImageView alloc]initWithFrame:CGRectMake(264+2, 380+2+y, 48, 48)];
-    [self.view addSubview:test6];
-    test6.backgroundColor = [UIColor greenColor];
+- (void)initBtnView {
+//    [self.labelView setFrame:CGRectMake(0, 20, 320, iPhone5?60:50)];
+//    [self.btnView setFrame:CGRectMake(0, iPhone5?448:320, 320, 70)];
 }
 
+- (IBAction)clickVoice:(id)sender {
+}
+
+- (IBAction)clickStart:(id)sender {
+}
+
+- (IBAction)clickRestart:(id)sender {
+}
+
+- (IBAction)clickShare:(id)sender {
+}
 @end
