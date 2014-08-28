@@ -22,6 +22,7 @@
 		B37CF48F19AC9833004261EA /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B37CF48D19AC9833004261EA /* MainViewController.m */; };
 		B37CF49019AC9833004261EA /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B37CF48E19AC9833004261EA /* MainViewController.xib */; };
 		B37CF49319ADAF04004261EA /* MyLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B37CF49219ADAF04004261EA /* MyLabel.m */; };
+		B37CF49819AEC47F004261EA /* example.png in Resources */ = {isa = PBXBuildFile; fileRef = B37CF49719AEC47F004261EA /* example.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		B37CF48E19AC9833004261EA /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainViewController.xib; path = Main/MainViewController.xib; sourceTree = "<group>"; };
 		B37CF49119ADAF04004261EA /* MyLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyLabel.h; path = MyLable/MyLabel.h; sourceTree = "<group>"; };
 		B37CF49219ADAF04004261EA /* MyLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyLabel.m; path = MyLable/MyLabel.m; sourceTree = "<group>"; };
+		B37CF49719AEC47F004261EA /* example.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = example.png; path = Image/example.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				B37CF46B19AC97F4004261EA /* AppDelegate.h */,
 				B37CF46C19AC97F4004261EA /* AppDelegate.m */,
 				B37CF48B19AC9807004261EA /* Main */,
+				B37CF49419AEC3E8004261EA /* Image */,
 				B37CF46E19AC97F4004261EA /* Images.xcassets */,
 				B37CF46319AC97F4004261EA /* Supporting Files */,
 			);
@@ -163,6 +166,14 @@
 				B37CF49219ADAF04004261EA /* MyLabel.m */,
 			);
 			name = Main;
+			sourceTree = "<group>";
+		};
+		B37CF49419AEC3E8004261EA /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				B37CF49719AEC47F004261EA /* example.png */,
+			);
+			name = Image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -242,6 +253,7 @@
 			files = (
 				B37CF46719AC97F4004261EA /* InfoPlist.strings in Resources */,
 				B37CF49019AC9833004261EA /* MainViewController.xib in Resources */,
+				B37CF49819AEC47F004261EA /* example.png in Resources */,
 				B37CF46F19AC97F4004261EA /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

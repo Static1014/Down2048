@@ -17,9 +17,20 @@
 #define LABEL_WIDTH 48
 #define SPACE_WIDTH 4
 
-@interface MainViewController : UIViewController
+#define Time 1.0
+#define ONE_STEP_SCORE 1
+
+#define DOWN_NUM1 2
+#define DOWN_NUM2 4
+
+#define GAME_OVER 0
+#define GAME_SAME 1
+#define GAME_CONTINUE 2
+
+@interface MainViewController : UIViewController <UIAlertViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *labelArray;
+//@property (strong, nonatomic) NSMutableArray *downNumberArray;
 
 @property (strong, nonatomic) MyLabel *standbyLable;
 @property (strong, nonatomic) MyLabel *downLable;
@@ -29,6 +40,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bestLabel;
 @property (weak, nonatomic) IBOutlet UIView *labelView;
 @property (weak, nonatomic) IBOutlet UIView *btnView;
+@property (strong, nonatomic) IBOutlet UIButton *startBtn;
 
 - (IBAction)clickVoice:(id)sender;
 - (IBAction)clickStart:(id)sender;
